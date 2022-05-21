@@ -4,23 +4,17 @@ import { RouterLink, RouterView } from "vue-router";
 <script>
 export default {
   data() {
-    return {
-      message: 'simple one'
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <input v-model="message" placeholder="edit" />
-      <p>Message is {{ message }}</p>
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <!-- <RouterLink to="/about">About</RouterLink> -->
       </nav>
     </div>
   </header>
