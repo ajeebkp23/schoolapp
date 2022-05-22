@@ -10,8 +10,12 @@ export default {
   },
   methods: {
     editAction(item) {
-      this.classListState.editItem = {...item};
+      this.classListState.editItem = { ...item };
     },
+    deleteAction(item) {
+      var thisItemId = item.id;
+      this.classListState.classList = [...this.classListState.classList].filter(innerItem => innerItem.id != thisItemId)
+    }
   },
 };
 </script>
@@ -28,7 +32,10 @@ export default {
       <td>{{ item.id }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.teacher }}</td>
-      <td><button @click="editAction(item)">Edit</button></td>
+      <td>
+        <button @click="editAction(item)">Edit</button>
+        <button @click="deleteAction(item)">Delete</button>
+      </td>
     </tr>
   </table>
 </template>
