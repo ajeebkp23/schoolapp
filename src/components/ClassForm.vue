@@ -4,16 +4,20 @@ import { useClassListStore } from "../stores/classList";
 export default {
   methods: {
     showMe() {
-      this.classListState.add({
-        name: this.nameOfClass,
-        teacher: this.nameOfTeacher,
-      });
+      if (this.nameOfClass != "" && this.nameOfTeacher != "") {
+        this.classListState.add({
+          name: this.nameOfClass,
+          teacher: this.nameOfTeacher,
+        });
+        this.nameOfClass = "";
+        this.nameOfTeacher = "";
+      }
     },
   },
   data() {
     return {
-      nameOfClass: "Class 2A",
-      nameOfTeacher: "John Honai",
+      nameOfClass: "",
+      nameOfTeacher: "",
     };
   },
   setup() {
@@ -32,6 +36,11 @@ export default {
     <div><input v-model="nameOfClass" /></div>
     <div>Name of teacher: ({{ nameOfTeacher }})</div>
     <div><input v-model="nameOfTeacher" /></div>
-    <button @click="showMe">Save</button>
+    <button
+      :disabled="nameOfClass == '' || nameOfTeacher == ''"
+      @click="showMe"
+    >
+      Save
+    </button>
   </div>
 </template>
