@@ -1,13 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 </script>
-<script>
-export default {
-  data() {
-    return {};
-  },
-};
-</script>
 
 <template>
   <header>

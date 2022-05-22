@@ -9,6 +9,8 @@ import ClassForm from "../components/ClassForm.vue";
     <span>This page displays a list of classes</span>
     <div>
       <ClassViewVue />
+    </div>
+    <div>
       <ClassForm />
     </div>
   </main>

@@ -1,16 +1,25 @@
 <script>
+import { useClassListStore } from "../stores/classList";
+
 export default {
   methods: {
     showMe() {
-      alert(
-        `yeah. You entered Class: ${this.nameOfClass}, Teacher: ${this.nameOfTeacher}`
-      );
+      this.classListState.add({
+        name: this.nameOfClass,
+        teacher: this.nameOfTeacher,
+      });
     },
   },
   data() {
     return {
       nameOfClass: "Class 2A",
       nameOfTeacher: "John Honai",
+    };
+  },
+  setup() {
+    const classListState = useClassListStore();
+    return {
+      classListState,
     };
   },
 };
