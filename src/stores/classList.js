@@ -7,20 +7,15 @@ export const useClassListStore = defineStore({
       {
         name: "Class 3A",
         teacher: "John Mac",
+        id: 1,
       },
       {
         name: "class 2a",
         teacher: "ms windows",
-      },
-      {
-        name: "class 1a",
-        teacher: "john snow",
-      },
-      {
-        name: "Class 2C",
-        teacher: "Jack Sparow",
+        id: 2,
       },
     ],
+    editItem: {},
   }),
   getters: {
     // doubleCount: (state) => state.counter * 2,

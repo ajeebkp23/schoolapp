@@ -8,18 +8,27 @@ export default {
       classListState,
     };
   },
+  methods: {
+    editAction(item) {
+      this.classListState.editItem = {...item};
+    },
+  },
 };
 </script>
 
 <template>
   <table>
     <tr>
+      <th>ID</th>
       <th>Class Name</th>
       <th>Teacher</th>
+      <th>Actions</th>
     </tr>
     <tr v-for="item in classListState.classList" v-bind:key="item.name">
+      <td>{{ item.id }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.teacher }}</td>
+      <td><button @click="editAction(item)">Edit</button></td>
     </tr>
   </table>
 </template>

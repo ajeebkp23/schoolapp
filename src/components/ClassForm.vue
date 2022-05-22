@@ -3,22 +3,43 @@ import { useClassListStore } from "../stores/classList";
 
 export default {
   methods: {
-    showMe() {
-      if (this.nameOfClass != "" && this.nameOfTeacher != "") {
-        this.classListState.add({
-          name: this.nameOfClass,
-          teacher: this.nameOfTeacher,
-        });
-        this.nameOfClass = "";
-        this.nameOfTeacher = "";
+    saveOrUpdate() {
+      if (
+        this.classListState?.editItem?.name != "" &&
+        this.classListState?.editItem?.teacher != ""
+      ) {
+        var newitem = {
+          name: this.classListState?.editItem?.name,
+          teacher: this.classListState?.editItem?.teacher,
+        };
+        if (this.isEdit) {
+          var thisItemId = this.classListState.editItem.id;
+          var existingItemIndex = this.classListState.classList.findIndex(
+            function (item) {
+              return item.id == thisItemId;
+            }
+          );
+          this.classListState.classList[existingItemIndex] = {
+            id: thisItemId,
+            ...newitem,
+          };
+        } else {
+          var max = Math.max.apply(
+            Math,
+            this.classListState.classList.map((item) => item.id)
+          );
+          var nextId = max + 1;
+          this.classListState.add({
+            id: nextId,
+            ...newitem,
+          });
+        }
+        this.clearData();
       }
     },
-  },
-  data() {
-    return {
-      nameOfClass: "",
-      nameOfTeacher: "",
-    };
+    clearData() {
+      this.classListState.editItem = {};
+    },
   },
   setup() {
     const classListState = useClassListStore();
@@ -26,21 +47,33 @@ export default {
       classListState,
     };
   },
+  computed: {
+    isEdit() {
+      return this.classListState.editItem.id != undefined;
+    },
+  },
 };
 </script>
 
 <template>
-  Add A Class
+  <h2>
+    {{ isEdit ? "Edit" : "Add" }} A Class
+    {{ isEdit ? `(${this.classListState?.editItem?.id})` : "" }}
+  </h2>
   <div>
-    <div>Name of class: ({{ nameOfClass }})</div>
-    <div><input v-model="nameOfClass" /></div>
-    <div>Name of teacher: ({{ nameOfTeacher }})</div>
-    <div><input v-model="nameOfTeacher" /></div>
+    <div>Name of class: ({{ this.classListState.editItem.name }})</div>
+    <div><input v-model="this.classListState.editItem.name" /></div>
+    <div>Name of teacher: ({{ this.classListState.editItem.teacher }})</div>
+    <div><input v-model="this.classListState.editItem.teacher" /></div>
     <button
-      :disabled="nameOfClass == '' || nameOfTeacher == ''"
-      @click="showMe"
+      :disabled="
+        !Boolean(this.classListState.editItem.name) ||
+        !Boolean(this.classListState.editItem.teacher)
+      "
+      @click="saveOrUpdate"
     >
-      Save
+      {{ isEdit ? "Update" : "Save" }}
     </button>
+    <button @click="clearData">Clear Data</button>
   </div>
 </template>
